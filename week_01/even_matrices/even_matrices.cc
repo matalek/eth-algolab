@@ -1,3 +1,8 @@
+// Even matrices
+// Week 1
+// Aleksander Matusiak
+
+
 #include <algorithm>
 #include <cassert>
 #include <climits>

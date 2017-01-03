@@ -1,3 +1,7 @@
+// Dominoes
+// Week 1
+// Aleksander Matusiak
+
 #include <algorithm>
 #include <climits>
 #include <deque>

@@ -1,3 +1,7 @@
+// Deck of cards
+// Week 1, Problem of the Week
+// Aleksander Matusiak
+
 #include <algorithm>
 #include <climits>
 #include <deque>

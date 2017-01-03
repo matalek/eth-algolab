@@ -9,6 +9,7 @@
 #include <vector>
 
 #define REP(i, n) for (int i = 0; i < (n); ++i)
+#define FOR(i, a, b) for (int i = (a); i < (b); ++i)
 #define ST first
 #define ND second
 #define PB push_back
