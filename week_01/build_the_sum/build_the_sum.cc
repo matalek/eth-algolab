@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <cassert>
 #include <climits>
 #include <deque>
 #include <iostream>
@@ -23,7 +22,15 @@ typedef vector<int> VI;
 typedef long long int LL;
 
 void do_test() {
-
+    int n;
+    cin >> n;
+    double sum = 0;
+    for (int i = 0; i < n; i++) {
+        double a;
+        cin >> a;
+        sum += a;
+    }
+    cout << sum << "\n";
 }
 
 int main() {

@@ -23,7 +23,28 @@ typedef vector<int> VI;
 typedef long long int LL;
 
 void do_test() {
+    int n;
+    cin >> n;
 
+    int sum = 0, res = 0;
+    // Counters for number of odd and even prefix sums.
+    int odds = 0, evens = 1;
+    REP(i, n) {
+        int a;
+        cin >> a;
+        sum += a;
+        // We are relying on the fact that sum of each interval is equal to
+        // the difference between appropriate prefix sums.
+        if (sum % 2) {
+            res += odds;
+            odds++;
+        } else {
+            res += evens;
+            evens++;
+        }
+    }
+
+    cout << res << "\n";
 }
 
 int main() {

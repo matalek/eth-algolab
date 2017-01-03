@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <cassert>
 #include <climits>
 #include <deque>
 #include <iostream>
@@ -23,7 +22,27 @@ typedef vector<int> VI;
 typedef long long int LL;
 
 void do_test() {
+	int n;
+	cin >> n;
+	int arr[n];
+	REP(i, n) {
+		cin >> arr[i];
+	}
 
+	// Range of all falling tiles.
+	int range = 1;
+	int result = n;
+	REP(i, n) {
+		if (range <= i) {
+			// The last falling domino tiles has not reached the current
+			// domino tile.
+			result = i;
+			break;
+		}
+		range = max(range, i + arr[i]);
+	}
+
+	cout << result << "\n";
 }
 
 int main() {

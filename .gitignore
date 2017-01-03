@@ -1,0 +1,14 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+
+# Ignore binary output file
+**/a.out
+
+# Ignore Mac OS files
+**/.DS_Store
