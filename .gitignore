@@ -12,3 +12,12 @@
 
 # Ignore Mac OS files
 **/.DS_Store
+
+# Ignoring CGAL compiling files
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/Makefile
+**/CMakeFiles
+
+# Ignore old solutions
+**/old/
