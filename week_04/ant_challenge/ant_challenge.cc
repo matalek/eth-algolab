@@ -82,9 +82,10 @@ void do_test() {
         int hive;
         cin >> hive;
 
-        // Network for each species is actually the minimum spanning tree,
-        // calculated by Kruskal's algorithm. The position of the hive is
-        // irrelevant.
+        // Network for each species is corresponding the minimum spanning tree
+        // computed by Prim's algorithm. Since each edge has unique weight, the
+        // MSTs computed using Prim's and Kruskal's algorithms are the same, so
+        // for the sake of simplicity we will use Kruskal's algorithm.
         vector<Edge> mst;
         kruskal_minimum_spanning_tree(species_graphs[i], back_inserter(mst));
         vector<Edge>::iterator mstbeg, mstend = mst.end();
