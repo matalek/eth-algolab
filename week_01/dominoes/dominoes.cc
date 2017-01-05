@@ -21,40 +21,36 @@
 using namespace std;
 
 typedef pair<int, int> PII;
-typedef vector < PII > VPII;
+typedef vector<PII> VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
 void do_test() {
-	int n;
-	cin >> n;
-	int arr[n];
-	REP(i, n) {
-		cin >> arr[i];
-	}
+    int n;
+    cin >> n;
+    int arr[n];
+    REP(i, n) { cin >> arr[i]; }
 
-	// Range of all falling tiles.
-	int range = 1;
-	int result = n;
-	REP(i, n) {
-		if (range <= i) {
-			// The last falling domino tiles has not reached the current
-			// domino tile.
-			result = i;
-			break;
-		}
-		range = max(range, i + arr[i]);
-	}
+    // Range of all falling tiles.
+    int range = 1;
+    int result = n;
+    REP(i, n) {
+        if (range <= i) {
+            // The last falling domino tiles has not reached the current
+            // domino tile.
+            result = i;
+            break;
+        }
+        range = max(range, i + arr[i]);
+    }
 
-	cout << result << "\n";
+    cout << result << "\n";
 }
 
 int main() {
     std::ios_base::sync_with_stdio(false);
     int T;
     cin >> T;
-    REP(i, T) {
-        do_test();
-    }
+    REP(i, T) { do_test(); }
     return 0;
 }

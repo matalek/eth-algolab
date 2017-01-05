@@ -28,22 +28,21 @@ int n, m;
 // Traverses the circle, starting at start and finishing at end, and counts
 // maximum number of indepent Jedis covering it.
 int go_round(int start, int end) {
-    vector<PII> s; // (segment_end, segment_start), both elements relative
-                   // to the beggining of the considered interval
+    vector<PII> s;  // (segment_end, segment_start), both elements relative
+                    // to the beggining of the considered interval
     int cnt = 0;
     // Choosing segments which are inside the considered interval.
     REP(i, n) {
-        if (start <= end && seg[i].ST <= seg[i].ND
-                && seg[i].ST >= start && seg[i].ST <= end
-                && seg[i].ND >= start && seg[i].ND <= end ) {
+        if (start <= end && seg[i].ST <= seg[i].ND && seg[i].ST >= start &&
+            seg[i].ST <= end && seg[i].ND >= start && seg[i].ND <= end) {
             // We don't need to go over the beggining of the circle.
             s.PB(MP(seg[i].ND - start, seg[i].ST - start));
-        } else if (start > end
-                && ((seg[i].ST - start + m) % m <= (seg[i].ND - start + m) % m)
-                && (seg[i].ST >= start || (seg[i].ST >= 0
-                        && seg[i].ST <= end))
-                && (seg[i].ND >= start || (seg[i].ND >= 0
-                        && seg[i].ND <= end))) {
+        } else if (start > end && ((seg[i].ST - start + m) % m <=
+                                   (seg[i].ND - start + m) % m) &&
+                   (seg[i].ST >= start ||
+                    (seg[i].ST >= 0 && seg[i].ST <= end)) &&
+                   (seg[i].ND >= start ||
+                    (seg[i].ND >= 0 && seg[i].ND <= end))) {
             // We need to go over the beggining of the circle.
             s.PB(MP((seg[i].ND - start + m) % m, (seg[i].ST - start + m) % m));
         }
@@ -64,18 +63,18 @@ int go_round(int start, int end) {
     return cnt;
 }
 
-
 void do_test() {
     cin >> n >> m;
 
-    vector<pair<int, bool> > v; // (position, is_end)
+    vector<pair<int, bool> > v;  // (position, is_end)
     // Counts number of Jedi available to cover the current position.
     // We start with start (and the end) of the circle.
     int cur = 0;
     REP(i, n) {
         int a, b;
         cin >> a >> b;
-        a--; b--;
+        a--;
+        b--;
         seg[i] = MP(a, b);
         v.PB(MP(seg[i].ST, false));
         v.PB(MP(seg[i].ND, true));
@@ -94,10 +93,10 @@ void do_test() {
     // covered by at most 10 Jedis. Therefore, we will find  the segment with
     // the smallest number of Jedis covering it.
 
-    int start_pos; // keeps the position with minimum number of Jedis
-                   // covering it
+    int start_pos;  // keeps the position with minimum number of Jedis
+                    // covering it
     int index = 0;
-    int cur_min = NIL; // keeps minimum number of Jedis at one position
+    int cur_min = NIL;  // keeps minimum number of Jedis at one position
 
     // Traversing begginings and ends of segments in order of their
     // placement on the circle.
@@ -129,10 +128,10 @@ void do_test() {
     // Computing Jedis covering starting possition.
     VI covering;
     REP(i, n) {
-        if ((seg[i].ST <= seg[i].ND
-                && seg[i].ST <= start_pos && seg[i].ND >= start_pos)
-            || (seg[i].ST > seg[i].ND
-                && (start_pos >= seg[i].ST || start_pos <= seg[i].ND))) {
+        if ((seg[i].ST <= seg[i].ND && seg[i].ST <= start_pos &&
+             seg[i].ND >= start_pos) ||
+            (seg[i].ST > seg[i].ND &&
+             (start_pos >= seg[i].ST || start_pos <= seg[i].ND))) {
             covering.PB(i);
         }
     }
@@ -145,7 +144,7 @@ void do_test() {
             // If segment is covering the whole circle.
             cur_res = 1;
         } else {
-            cur_res = 1 + go_round((seg[c].ND + 1) % m, (seg[c].ST ) % m);
+            cur_res = 1 + go_round((seg[c].ND + 1) % m, (seg[c].ST) % m);
         }
         res = max(res, cur_res);
     }
@@ -160,8 +159,6 @@ int main() {
     std::ios_base::sync_with_stdio(false);
     int T;
     cin >> T;
-    REP(i, T) {
-        do_test();
-    }
+    REP(i, T) { do_test(); }
     return 0;
 }

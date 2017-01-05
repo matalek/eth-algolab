@@ -23,7 +23,7 @@
 using namespace std;
 
 typedef pair<int, int> PII;
-typedef vector < PII > VPII;
+typedef vector<PII> VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
@@ -34,9 +34,7 @@ void do_test() {
     VI friends(n);
     multiset<int, greater<int> > weigths;
 
-    REP(i, n) {
-        cin >> friends[i];
-    }
+    REP(i, n) { cin >> friends[i]; }
 
     REP(i, m) {
         int a;
@@ -48,14 +46,15 @@ void do_test() {
 
     int cur_friend = 0;
     int time = 2;
-    bool something = false; // if something has been moved in the current turn
-    VI new_friends; // friends working in the current turn
+    bool something = false;  // if something has been moved in the current turn
+    VI new_friends;          // friends working in the current turn
 
-    while(weigths.size()) {
+    while (weigths.size()) {
         // Turn finishes - all friends that still have enough strength return
         // upstairs.
         if (cur_friend == friends.size()) {
-            if (!something) break;
+            if (!something)
+                break;
             time += 3;
             cur_friend = 0;
             friends = new_friends;
@@ -89,8 +88,6 @@ int main() {
     std::ios_base::sync_with_stdio(false);
     int T;
     cin >> T;
-    REP(i, T) {
-        do_test();
-    }
+    REP(i, T) { do_test(); }
     return 0;
 }

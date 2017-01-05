@@ -22,7 +22,7 @@
 using namespace std;
 
 typedef pair<int, int> PII;
-typedef vector < PII > VPII;
+typedef vector<PII> VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
@@ -61,9 +61,7 @@ void mark(int beg, int cnt, STATUS st) {
 void mark_others(int n, int coins_cnt) {
     // Marking coins that were present in the weighing.
     vector<bool> present(n);
-    REP(i, 2 * coins_cnt) {
-        present[coins[i]] = true;
-    }
+    REP(i, 2 * coins_cnt) { present[coins[i]] = true; }
 
     REP(i, n) {
         if (!present[i]) {
@@ -75,9 +73,7 @@ void mark_others(int n, int coins_cnt) {
 void do_test() {
     int n, k;
     cin >> n >> k;
-    REP(i, n) {
-        statuses[i] = UNDEFINED;
-    }
+    REP(i, n) { statuses[i] = UNDEFINED; }
 
     REP(w, k) {
         // Reading coins for the weighing.
@@ -130,8 +126,6 @@ int main() {
     std::ios_base::sync_with_stdio(false);
     int T;
     cin >> T;
-    REP(i, T) {
-        do_test();
-    }
+    REP(i, T) { do_test(); }
     return 0;
 }

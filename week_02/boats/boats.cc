@@ -23,19 +23,17 @@
 using namespace std;
 
 typedef pair<int, int> PII;
-typedef vector < PII > VPII;
+typedef vector<PII> VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
 const int INF = 10000000;
 
 void do_test() {
-    int  n;
+    int n;
     cin >> n;
-    VPII v(n); // (ring position, length)
-    REP(i, n) {
-        cin >> v[i].ND >> v[i].ST;
-    }
+    VPII v(n);  // (ring position, length)
+    REP(i, n) { cin >> v[i].ND >> v[i].ST; }
 
     // Sorting based on the ring position.
     sort(v.begin(), v.end());
@@ -70,8 +68,6 @@ int main() {
     std::ios_base::sync_with_stdio(false);
     int T;
     cin >> T;
-    REP(i, T) {
-        do_test();
-    }
+    REP(i, T) { do_test(); }
     return 0;
 }

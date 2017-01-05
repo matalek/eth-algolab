@@ -23,13 +23,13 @@
 using namespace std;
 
 typedef pair<int, int> PII;
-typedef vector < PII > VPII;
+typedef vector<PII> VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
 const int N = 70000;
 int arr[N];
-int blocking[N]; // counts number of bombs that have to be disactivated first
+int blocking[N];  // counts number of bombs that have to be disactivated first
 int n;
 
 // Calculates minimal time of the explosion for bombs dependent on (placed on
@@ -62,7 +62,7 @@ void do_test() {
     // the shortest time to the explosion depending on this bomb.
     set<PII> to_deactivate;
     // Initiating bombs possible to deactivate by the ground layer.
-    for (int i = (n+1)/2 - 1; i < n; i++) {
+    for (int i = (n + 1) / 2 - 1; i < n; i++) {
         to_deactivate.insert(MP(arr[i], i));
     }
 
@@ -106,8 +106,6 @@ int main() {
     std::ios_base::sync_with_stdio(false);
     int T;
     cin >> T;
-    REP(i, T) {
-        do_test();
-    }
+    REP(i, T) { do_test(); }
     return 0;
 }

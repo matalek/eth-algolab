@@ -21,7 +21,7 @@
 using namespace std;
 
 typedef pair<int, int> PII;
-typedef vector < PII > VPII;
+typedef vector<PII> VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
@@ -62,8 +62,8 @@ void do_test() {
 
             PII potential_result = MP(start, i);
             if (cur_min == -1 ||
-                    (act < cur_min ||
-                            (act == cur_min && potential_result < result))) {
+                (act < cur_min ||
+                 (act == cur_min && potential_result < result))) {
                 // Potential result is better than the previously found one.
                 result = potential_result;
                 cur_min = act;

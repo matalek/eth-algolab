@@ -21,7 +21,7 @@
 
 using namespace std;
 
-typedef vector < pair<int, int> > VPII;
+typedef vector<pair<int, int> > VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
@@ -37,94 +37,86 @@ T maps[N];
 VI under[N];
 
 bool in_triangle(const T& t, const P& p) {
-	auto o = t.bounded_side(p);
-	return o == CGAL::ON_BOUNDED_SIDE || o == CGAL::ON_BOUNDARY;
+    auto o = t.bounded_side(p);
+    return o == CGAL::ON_BOUNDED_SIDE || o == CGAL::ON_BOUNDARY;
 }
 
 void do_test() {
-	int m, n;
-	cin >> m >> n;
-	int a, b, c, d, e, f;
-	REP(i, m) {
-		cin >> a >> b;
-		paths[i] = P(a, b);
-	}
+    int m, n;
+    cin >> m >> n;
+    int a, b, c, d, e, f;
+    REP(i, m) {
+        cin >> a >> b;
+        paths[i] = P(a, b);
+    }
 
-	REP(i, n) {
-		P points[6];
-		REP(j, 6) {
-			cin >> a >> b;
-			points[j] = P(a, b);
-		}
+    REP(i, n) {
+        P points[6];
+        REP(j, 6) {
+            cin >> a >> b;
+            points[j] = P(a, b);
+        }
 
-		L edges[3];
-		REP(j, 3) {
-			edges[j] = L(points[2 * j], points[2 * j + 1]);
-		}
+        L edges[3];
+        REP(j, 3) { edges[j] = L(points[2 * j], points[2 * j + 1]); }
 
-		P vertices[3];
-		REP(j, 3) {
-			auto o = CGAL::intersection(edges[j], edges[(j + 1) % 3]);
-			vertices[j] = *boost::get<P>(&*o);
-		}
+        P vertices[3];
+        REP(j, 3) {
+            auto o = CGAL::intersection(edges[j], edges[(j + 1) % 3]);
+            vertices[j] = *boost::get<P>(&*o);
+        }
 
-		maps[i] = T(vertices[0], vertices[1], vertices[2]);
-	}
+        maps[i] = T(vertices[0], vertices[1], vertices[2]);
+    }
 
-	int start = 0, end = 0, cnt = 0, res = -1;
-	int over[m];
-	REP(i, m) {
-		over[i] = 0;
-	}
+    int start = 0, end = 0, cnt = 0, res = -1;
+    int over[m];
+    REP(i, m) { over[i] = 0; }
 
-	REP(i, n) {
-		under[i].clear();
-	}
+    REP(i, n) { under[i].clear(); }
 
-	while (start < n) {
-		while (end < n && cnt < m - 1) {
-			T map = maps[end];
-			bool next = in_triangle(map, paths[0]);
-			REP(i, m - 1) {
-				bool tmp = in_triangle(map, paths[i + 1]);
-				if (next && tmp) {
-					over[i]++;
-					if (over[i] == 1) {
-						cnt++;
-					}
-					under[end].PB(i);
-				}
-				next = tmp;
-			}
-			end++;
-		}
+    while (start < n) {
+        while (end < n && cnt < m - 1) {
+            T map = maps[end];
+            bool next = in_triangle(map, paths[0]);
+            REP(i, m - 1) {
+                bool tmp = in_triangle(map, paths[i + 1]);
+                if (next && tmp) {
+                    over[i]++;
+                    if (over[i] == 1) {
+                        cnt++;
+                    }
+                    under[end].PB(i);
+                }
+                next = tmp;
+            }
+            end++;
+        }
 
-		if (cnt == m - 1) {
-			if (res == -1 || end - start < res) {
-				res = end - start;
-			}
-		} else {
-			break;
-		}
+        if (cnt == m - 1) {
+            if (res == -1 || end - start < res) {
+                res = end - start;
+            }
+        } else {
+            break;
+        }
 
-		for (int path : under[start]) {
-			over[path]--;
-			if (!over[path]) {
-				cnt--;
-			}
-		}
-		start++;
-	}
+        for (int path : under[start]) {
+            over[path]--;
+            if (!over[path]) {
+                cnt--;
+            }
+        }
+        start++;
+    }
 
-	cout << res << "\n";
+    cout << res << "\n";
 }
 
 int main() {
-	std::ios_base::sync_with_stdio(false);
-	int t;
-	cin >> t;
-	REP(i, t) {
-		do_test();
-	}
-	return 0;
+    std::ios_base::sync_with_stdio(false);
+    int t;
+    cin >> t;
+    REP(i, t) { do_test(); }
+    return 0;
 }

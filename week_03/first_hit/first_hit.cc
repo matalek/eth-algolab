@@ -20,7 +20,7 @@
 
 using namespace std;
 
-typedef vector < pair<int, int> > VPII;
+typedef vector<pair<int, int> > VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
@@ -31,8 +31,10 @@ typedef K::Point_2 P;
 
 double floor_to_double(const K::FT& x) {
     double a = std::floor(CGAL::to_double(x));
-    while (a > x) a -= 1;
-    while (a+1 <= x) a += 1;
+    while (a > x)
+        a -= 1;
+    while (a + 1 <= x)
+        a += 1;
     return a;
 }
 
@@ -40,13 +42,13 @@ double floor_to_double(const K::FT& x) {
 // as an input), as well as shortened segment - from starting point till the
 // first obstacle.
 struct Beam {
-    L ray; // original ray
-    S seg; // segment from start to the first obstacle
+    L ray;  // original ray
+    S seg;  // segment from start to the first obstacle
     P start;
-    bool is_ray; // whether we are storing ray (otherwise - segment)
+    bool is_ray;  // whether we are storing ray (otherwise - segment)
 
-    Beam(P start, P direction) : ray(start, direction), start(start),
-            is_ray(true) { };
+    Beam(P start, P direction)
+        : ray(start, direction), start(start), is_ray(true){};
 
     void set_end(P& end) {
         seg = S(start, end);
@@ -62,9 +64,7 @@ void do_test(int n) {
 
     LL arr[n][4];
     REP(i, n) {
-        REP(j, 4) {
-            cin >> arr[i][j];
-        }
+        REP(j, 4) { cin >> arr[i][j]; }
     }
 
     // Shuffling input data so as to improve expected time complexity.
@@ -77,20 +77,17 @@ void do_test(int n) {
 
         // Checking if current segment intersects with current laser beam -
         // ray or segment.
-        auto intersect = beam.is_ray
-                ? CGAL::intersection(beam.ray, seg)
-                : CGAL::intersection(beam.seg, seg);
+        auto intersect = beam.is_ray ? CGAL::intersection(beam.ray, seg)
+                                     : CGAL::intersection(beam.seg, seg);
         if (intersect) {
-            auto o = beam.is_ray
-                    ? CGAL::intersection(beam.ray, seg)
-                    : CGAL::intersection(beam.seg, seg);
+            auto o = beam.is_ray ? CGAL::intersection(beam.ray, seg)
+                                 : CGAL::intersection(beam.seg, seg);
 
             P new_laser_end;
             if (const P* intersection_point = boost::get<P>(&*o)) {
                 // One intersection point.
                 new_laser_end = *intersection_point;
-            }
-            else if (const S* intersection_seg = boost::get<S>(&*o))  {
+            } else if (const S* intersection_seg = boost::get<S>(&*o)) {
                 // Intersection is a segment, we need to find the end of
                 // the obstacle that is closer to the starting point of the
                 // laser beam.
@@ -111,8 +108,8 @@ void do_test(int n) {
         // We haven't find any intersection.
         cout << "no\n";
     } else {
-        cout << (LL) floor_to_double(beam.seg.target().x()) << " "
-                << (LL) floor_to_double(beam.seg.target().y()) << "\n";
+        cout << (LL)floor_to_double(beam.seg.target().x()) << " "
+             << (LL)floor_to_double(beam.seg.target().y()) << "\n";
     }
 }
 

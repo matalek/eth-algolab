@@ -21,7 +21,7 @@
 
 using namespace std;
 
-typedef vector <pair<int, int> > VPII;
+typedef vector<pair<int, int> > VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
@@ -33,8 +33,10 @@ typedef K::Point_2 P;
 // Rounds x up to the nearest integer.
 double ceil_to_double(const K::FT& x) {
     double a = std::ceil(CGAL::to_double(x));
-    while (a < x) a += 1;
-    while (a-1 >= x) a -= 1;
+    while (a < x)
+        a += 1;
+    while (a - 1 >= x)
+        a -= 1;
     return a;
 }
 
@@ -49,7 +51,7 @@ void do_test(int n) {
     // Calculating minimal enclosing circle for the points.
     Min_circle mc(points.begin(), points.end(), true);
     Traits::Circle c = mc.circle();
-    cout << (LL) ceil_to_double(CGAL::sqrt(c.squared_radius())) << "\n";
+    cout << (LL)ceil_to_double(CGAL::sqrt(c.squared_radius())) << "\n";
 }
 
 int main() {

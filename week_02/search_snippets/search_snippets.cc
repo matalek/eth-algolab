@@ -23,7 +23,7 @@
 using namespace std;
 
 typedef pair<int, int> PII;
-typedef vector < PII > VPII;
+typedef vector<PII> VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
@@ -48,7 +48,8 @@ void fill_up() {
 // Checks whether every words occurs at least once. If yes, it updates current
 // resulting interval length.
 void check() {
-    if (cnt < n) return;
+    if (cnt < n)
+        return;
     int diff = words[interval_end - 1].first - words[interval_start].first + 1;
     if (res == NIL || diff < res) {
         res = diff;
@@ -78,7 +79,10 @@ void do_test() {
     // to make sure that, if possible, every words occur at least once in
     // the inverval (interval_start, interval_end). We then check whether
     // we have improved the result.
-    cnt = 0; res = NIL; interval_start = 0; interval_end = 0;
+    cnt = 0;
+    res = NIL;
+    interval_start = 0;
+    interval_end = 0;
     fill_up();
     check();
 
@@ -101,8 +105,6 @@ int main() {
     std::ios_base::sync_with_stdio(false);
     int T;
     cin >> T;
-    REP(i, T) {
-        do_test();
-    }
+    REP(i, T) { do_test(); }
     return 0;
 }

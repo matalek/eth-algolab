@@ -23,7 +23,7 @@
 using namespace std;
 
 typedef pair<int, int> PII;
-typedef vector < PII > VPII;
+typedef vector<PII> VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
@@ -36,7 +36,7 @@ string results[N];
 int age[N];
 bool vis[N];
 bool any_in[N];
-VPII anc; // stack of the ancestors
+VPII anc;  // stack of the ancestors
 
 int n, m;
 
@@ -84,7 +84,7 @@ void dfs(int v) {
 void do_test() {
     cin >> n >> m;
 
-    map<string, int> numbers; // keeping indexes for species names
+    map<string, int> numbers;  // keeping indexes for species names
 
     // Reading in names of species and clearing global data.
     REP(i, n) {
@@ -125,9 +125,7 @@ void do_test() {
     anc.clear();
     dfs(start);
 
-    REP(i, m) {
-        cout << results[i] << " ";
-    }
+    REP(i, m) { cout << results[i] << " "; }
     cout << "\n";
 }
 

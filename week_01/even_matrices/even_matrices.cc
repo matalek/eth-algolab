@@ -2,7 +2,6 @@
 // Week 1
 // Aleksander Matusiak
 
-
 #include <algorithm>
 #include <cassert>
 #include <climits>
@@ -24,7 +23,7 @@
 using namespace std;
 
 typedef pair<int, int> PII;
-typedef vector < PII > VPII;
+typedef vector<PII> VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
@@ -41,7 +40,7 @@ void do_test() {
         REP(j, n) {
             int a;
             cin >> a;
-            sum[i][j] = (i > 0 ? sum[i-1][j] : 0) + a;
+            sum[i][j] = (i > 0 ? sum[i - 1][j] : 0) + a;
         }
     }
 
@@ -75,8 +74,6 @@ int main() {
     std::ios_base::sync_with_stdio(false);
     int T;
     cin >> T;
-    REP(i, T) {
-        do_test();
-    }
+    REP(i, T) { do_test(); }
     return 0;
 }

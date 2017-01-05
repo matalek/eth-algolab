@@ -18,7 +18,7 @@
 
 using namespace std;
 
-typedef vector < pair<int, int> > VPII;
+typedef vector<pair<int, int> > VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
@@ -41,10 +41,10 @@ bool in_triangle(const Map& map, const P& p) {
         auto point_orientation =
             CGAL::orientation(map.points[2 * i], map.points[2 * i + 1], p);
         auto triangle_orientation =
-                CGAL::orientation(map.points[2 * i], map.points[2 * i + 1],
-                        map.points[(2 * i + 2) % 6]);
-        if (point_orientation != triangle_orientation
-                && point_orientation != CGAL::COLLINEAR) {
+            CGAL::orientation(map.points[2 * i], map.points[2 * i + 1],
+                              map.points[(2 * i + 2) % 6]);
+        if (point_orientation != triangle_orientation &&
+            point_orientation != CGAL::COLLINEAR) {
             return false;
         }
     }
@@ -74,9 +74,9 @@ void do_test() {
     }
 
     int start = 0, end = 0, cnt = 0, res = NIL;
-    VI over(m); // how many maps are currently over given path
-    vector<VI> under(n); // keeping maps covering given point in the path,
-                         // so as not to compute them again.
+    VI over(m);           // how many maps are currently over given path
+    vector<VI> under(n);  // keeping maps covering given point in the path,
+                          // so as not to compute them again.
 
     // Sliding window approach - we move begging and end of the interval so
     // as to assure that each path is covered by some map.
@@ -127,8 +127,6 @@ int main() {
     std::ios_base::sync_with_stdio(false);
     int t;
     cin >> t;
-    REP(i, t) {
-        do_test();
-    }
+    REP(i, t) { do_test(); }
     return 0;
 }
