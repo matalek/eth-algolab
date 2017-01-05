@@ -21,3 +21,6 @@
 
 # Ignore old solutions
 **/old/
+
+# Ingore tutorial slides and examples
+**/tutorial/
