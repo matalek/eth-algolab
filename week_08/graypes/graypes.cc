@@ -1,5 +1,5 @@
 // Graypes
-// Week 7
+// Week 8
 // Aleksander Matusiak
 
 #include <algorithm>

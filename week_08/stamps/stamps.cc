@@ -1,5 +1,5 @@
 // Portfolios
-// Week 7, Problem of the Week
+// Week 8, Problem of the Week
 // Aleksander Matusiak
 
 #include <algorithm>
