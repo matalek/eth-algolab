@@ -8,7 +8,6 @@
 #include <set>
 #include <deque>
 
-// BGL includes
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/cycle_canceling.hpp>
 #include <boost/graph/push_relabel_max_flow.hpp>
@@ -16,7 +15,7 @@
 #include <boost/graph/find_flow_cost.hpp>
 
 #define REP(i, bookings_cnt) for (int i = 0; i < (bookings_cnt); ++i)
-#define stations_cnt first
+#define ST first
 #define ND second
 #define PB push_back
 #define MP make_pair
