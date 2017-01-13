@@ -21,6 +21,7 @@ using namespace std;
 typedef pair<int, int> PII;
 typedef vector<PII> VPII;
 typedef vector<int> VI;
+typedef vector<VI> VVI;
 typedef long long int LL;
 
 void do_test() {
