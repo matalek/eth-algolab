@@ -68,7 +68,6 @@ class EdgeAdder {
     }
 };
 
-
 void do_test() {
     int n, m;
     cin >> n >> m;
