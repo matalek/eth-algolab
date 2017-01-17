@@ -1,6 +1,8 @@
 // Deck of cards
 // Week 1, Problem of the Week
 // Aleksander Matusiak
+//
+// Proper solution which uses sliding window approach and works in O(n) time.
 
 #include <algorithm>
 #include <climits>
@@ -10,6 +12,7 @@
 #include <queue>
 #include <set>
 #include <vector>
+#include <cstdlib>
 
 #define REP(i, n) for (int i = 0; i < (n); ++i)
 #define ST first
@@ -29,59 +32,58 @@ void do_test() {
     int n, k;
     cin >> n >> k;
 
-    int current = 0, cur_min = -1;
-    map<int, int> sums;
-    sums.insert(MP(0, -1));
-    PII result;
+    VI cards(n);
 
-    REP(i, n) {
-        int a;
-        cin >> a;
-        current += a;
+    REP(i, n) { cin >> cards[i]; }
 
-        // Searching for the beggining of the interval which ends at i and
-        // aproximates the desired sum k in the best way.
-        int target = current - k;
-        vector<map<int, int>::iterator> to_consider;
-        auto it_bound = sums.lower_bound(target);
-        if (it_bound != sums.end()) {
-            to_consider.PB(it_bound);
-        }
-        // We might need to consider two possible begginings, one corresponding
-        // to sum lower than k, the other one to sum bigger than k.
-        if (it_bound != sums.begin()) {
-            auto it = map<int, int>::iterator(it_bound);
-            it--;
-            to_consider.PB(it);
+    PII result;  // stores indexes of beggining and one element after end for
+                 // resulting interval
+    int closest_value =
+        INT_MAX;  // sum closest to k that has been already found
+    int index_l = 0, index_r = 1, current_sum = cards[0];
+
+    // Iterate the left edge of the interval.
+    while (index_l < n) {
+        // Increase the right edge of the interval till the sum is lower than
+        // desired.
+        while (index_r < n && current_sum < k) {
+            current_sum += cards[index_r];
+            index_r++;
         }
 
-        // Iterating through possible begginings.
-        for (auto it : to_consider) {
-            int act = abs(it->ST - target);
-            int start = it->ND + 1;
+        // Because we're interested in the sum that can be lower or greater than
+        // k, we may need to go over two possible endings - one corresponding to
+        // value greater, another one to value lower than k.
+        vector<pair<int, PII> > to_consider;
+        to_consider.PB(MP(current_sum, MP(index_l, index_r)));
+        if (index_r > index_l + 1) {
+            to_consider.PB(
+                MP(current_sum - cards[index_r - 1], MP(index_l, index_r - 1)));
+        }
 
-            PII potential_result = MP(start, i);
-            if (cur_min == -1 ||
-                (act < cur_min ||
-                 (act == cur_min && potential_result < result))) {
-                // Potential result is better than the previously found one.
-                result = potential_result;
-                cur_min = act;
+        // Move the left edge.
+        current_sum -= cards[index_l];
+        index_l++;
+
+        // Iterating through possible intervals.
+        for (auto el : to_consider) {
+            int diff = abs(el.ST - k);
+            if (diff < closest_value ||
+                (diff == closest_value && el.ND < result)) {
+                // Update current result - we found something better.
+                closest_value = diff;
+                result = el.ND;
             }
         }
-        // Updating map with prefix sums.
-        sums.insert(MP(current, i));
     }
 
-    cout << result.ST << " " << result.ND << "\n";
+    cout << result.ST << " " << result.ND - 1 << "\n";
 }
 
 int main() {
     std::ios_base::sync_with_stdio(false);
     int T;
     cin >> T;
-    for (int t = 0; t < T; t++) {
-        do_test();
-    }
+    REP(i, T) { do_test(); }
     return 0;
 }
