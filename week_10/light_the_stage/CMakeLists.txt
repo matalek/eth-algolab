@@ -15,6 +15,7 @@ if ( CGAL_FOUND )
   include( CGAL_CreateSingleSourceCGALProgram )
 
   create_single_source_cgal_program( "light_the_stage.cc" )
+  create_single_source_cgal_program( "light_the_stage_naive.cc" )
 
 else()
 

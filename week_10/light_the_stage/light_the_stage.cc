@@ -1,6 +1,10 @@
 // Light the Stage
 // Week 10
 // Aleksander Matusiak
+//
+// Solution which uses binary search with 2 optimizations: sometimes increasing
+// triangulation instead of creating it from scratch and removing players that
+// we already know have not been hit lastly.
 
 #include <iostream>
 #include <algorithm>
@@ -24,7 +28,6 @@ typedef K::Point_2 P;
 #define PB push_back
 #define MP make_pair
 #define deb(a)
-#define deb2(a)
 
 using namespace std;
 
@@ -33,14 +36,40 @@ typedef vector<PII> VPII;
 typedef vector<int> VI;
 typedef long long int LL;
 
-const int NIL = -1;
+// Returns players who have not been hit by the lamps from the given
+// triangulation.
+VI get_left(Triangulation& t, VI& players, vector<P>& pts, VI& radii, int h) {
+    // Iterate over players.
+    VI left_players;
+    for (int i : players) {
+        P p1, p2;
+        p1 = pts[i];
+        p2 = t.nearest_vertex(p1)->point();
+        int d = radii[i];
+        LL min_dist_sq = ((LL)h + d) * ((LL)h + d);
+
+        if (min_dist_sq <= CGAL::squared_distance(p1, p2)) {
+            // Player has not been killed by any lamp.
+            left_players.PB(i);
+        }
+    }
+    return left_players;
+}
+
+// Prints vector of integers with separating spaces.
+void print(VI& v) {
+    for (int el : v) {
+        cout << el << " ";
+    }
+    cout << "\n";
+}
 
 void do_test() {
     int m, n, h;
     cin >> m >> n;
 
     vector<P> pts(m);
-    vector<int> radii(m);
+    VI radii(m);
     REP(i, m) {
         cin >> pts[i];
         cin >> radii[i];
@@ -51,50 +80,51 @@ void do_test() {
     std::vector<P> lamps(n);
     REP(i, n) { cin >> lamps[i]; }
 
-    // Creating triangulation for lamps.
+    // Triangulation corresponding to currently considered lamps.
     Triangulation t;
+
+    VI res_players(m);  // vectors of resulting players - players left
+    REP(i, m) { res_players[i] = i; }
+
+    // Consider the case when there are some players left after all the rounds.
     t.insert(lamps.begin(), lamps.end());
-
-    VI hit_lamp(m);   // which lamp firstly hit given person
-    int max_hit = 0;  // last round in which some people are hit
-    int cnt = m;      // keeps number of players who haven't been hit yet.
-
-    // Iterate over players.
-    REP(i, m) {
-        P p1, p2;
-        p1 = pts[i];
-        p2 = t.nearest_vertex(p1)->point();
-        int d = radii[i];
-        LL min_dist_sq = ((LL)h + d) * ((LL)h + d);
-
-        if (min_dist_sq <= CGAL::squared_distance(p1, p2)) {
-            // Player has not been killed by any lamp.
-            hit_lamp[i] = NIL;
-            continue;
-        }
-
-        // Iteratate over lamps to find out which lamp hit given player first.
-        REP(j, n) {
-            p2 = lamps[j];
-            if (min_dist_sq > CGAL::squared_distance(p1, p2)) {
-                hit_lamp[i] = j;
-                max_hit = max(max_hit, j);
-                cnt--;
-                break;
-            }
-        }
+    VI left_players = get_left(t, res_players, pts, radii, h);
+    if (left_players.size()) {
+        print(left_players);
+        return;
     }
 
-    REP(i, m) {
-        if (((cnt > 0) &&
-             (hit_lamp[i] == NIL)) ||  // some players were left at the end
-            ((cnt == 0) &&
-             (hit_lamp[i] == max_hit))) {  // all players were hit and this
-                                           // player was hit in the last round
-            cout << i << " ";
+    // Perform binary search in order to find which lamp hit last players.
+    int bbeg = 0, bend = n;
+    int last_considered = n;  // previosly considered last lamp
+    while (bbeg != bend) {
+        int mid = (bbeg + bend) / 2;
+
+        if (last_considered < mid) {
+            // We already have some points added in the triangulation. We now
+            // just need to add missing points.
+            t.insert(lamps.begin() + last_considered, lamps.begin() + mid);
+        } else {
+            // We need to build the triangulation from scratch.
+            t = Triangulation();
+            t.insert(lamps.begin(), lamps.begin() + mid);
         }
+
+        VI left_players = get_left(t, res_players, pts, radii, h);
+
+        // Check if some players were left/
+        if (left_players.size()) {
+            // We will no longer need to consider players that have already been
+            // hit.
+            res_players = left_players;
+            bbeg = mid + 1;
+        } else {
+            bend = mid;
+        }
+        last_considered = mid;
     }
-    cout << "\n";
+
+    print(res_players);
 }
 
 int main() {
